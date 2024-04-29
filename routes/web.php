@@ -10,7 +10,11 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', '2fa'])->name('dashboard');
+
+Route::post('/2fa', function () {
+    return redirect(route('dashboard'));
+})->middleware(['auth', 'verified', '2fa'])->name('2fa');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
